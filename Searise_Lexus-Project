@@ -1,7 +1,7 @@
 node{
   def mavenHome = tool name: 'maven3.9.2'
  stage('1.CodeClone'){
-      git credentialsId: 'gitHubCredentials', url: 'https://github.com/SeariseTech/maven-web-application-1'
+      git credentialsId: 'none', url: 'https://github.com/Bumsy2023/maven-web-application-1'
    }
  stage('2MavenBuild'){
    sh "${mavenHome}/bin/mvn package"
@@ -13,7 +13,7 @@ node{
    sh "${mavenHome}/bin/mvn deploy"
  }
    stage('7deploy2Prod'){
-     deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.157.42.183:1978/')], contextPath: null, war: 'target/*war'
+     deploy adapters: [tomcat9(credentialsId: 'Tomcat2', path: '', url: 'http://44.202.15.218:8080/')], contextPath: null, war: 'target/*war'
  }
  stage('6Manualapproval'){
     sh "echo 'ready for review' "
@@ -22,7 +22,7 @@ node{
       }
   }
     stage('7deploy2Prod'){
-     deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.157.42.183:1978/')], contextPath: null, war: 'target/*war'
+     deploy adapters: [tomcat9(credentialsId: 'Tomcat2', path: '', url: 'http://44.202.15.218:8080/')], contextPath: null, war: 'target/*war'
  }
   stage('8emailNotify'){
     emailext body: '''Hello Team,
@@ -31,6 +31,6 @@ The Lexus application for USA is now in the prod env.
 The build is don!!!
 
 Thanks,
-Team SeariseTech.''', recipientProviders: [developers(), contributor(), upstreamDevelopers()], subject: 'Build Status', to: 'searisetech@gmail.com'
+Team SeariseTech.''', recipientProviders: [developers(), contributor(), upstreamDevelopers()], subject: 'Build Status', to: 'olubunmi791@gmail.com'
   }
 }
